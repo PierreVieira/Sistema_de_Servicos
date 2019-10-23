@@ -1,10 +1,13 @@
 package Principal;
-import Abstratos.*;
 
-import static Abstratos.Menu.menuPrincipal;
+import static Menu.ExibeMenu.exibeMenuGeral;
+import static Menu.TrataMenu.tratarMenuGeral;
+
 
 public class Main {
     public static void main(String[] args) {
-        menuPrincipal();
+        int opcao;
+        opcao = exibeMenuGeral();
+        tratarMenuGeral(opcao);
     }
 }
