@@ -39,16 +39,11 @@ public class LogicaSistema {
         Scanner teclado = new Scanner(System.in);
         String nome, senha;
         String saida_do_arquivo;
-        System.out.println("Informe seu nome de usuário: ");
+        System.out.print("Informe seu nome de usuário: ");
         nome = teclado.nextLine();
-        System.out.println("Informe sua senha: ");
+        System.out.print("Informe sua senha: ");
         senha = teclado.nextLine();
-        if(arquivo.temNoArquivo(nome, senha)){
-            saida_do_arquivo = arquivo.pegaDoArquivo(nome, senha);
-        }
-        else{
-            System.out.printf("Não existe usuário com o nome %s cadastrado no sistema!\n", nome);
-        }
+
     }
 
 }
