@@ -1,3 +1,3 @@
 Eduardo;AV.amazonas;email@gmail.com;031940028922;edu;usudu;ADM;
-Pierre;Rua São Paulo;pierrevieiraggg@gmail.com;031998005262;@PierreVieira;@senha1;USER;
+Pierre;Rua São Paulo;pierrevieiraggg@gmail.com;031998005262;@PierreVieira;@senha1;PROF;
 Thiago;Deodoro;thiago@hotmail.com;031111111111;@Thiago;@senha2;CLI;
