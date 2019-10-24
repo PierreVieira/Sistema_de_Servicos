@@ -2,10 +2,8 @@ package Concretos;
 
 public class Usuario {
 
-    //nome completo,endereço, e-mail, telefone, nome de usuário e senha para efetuar seu cadastro.
-
-    private String nome,endereco,email,telefone,nomeUsuario,senha;
-
+    private String nome, endereco, email, telefone, nomeUsuario, senha;
+    private boolean logado;
     public Usuario(String nome, String endereco, String email, String telefone, String nomeUsuario, String senha) {
         this.nome = nome;
         this.endereco = endereco;
@@ -13,8 +11,25 @@ public class Usuario {
         this.telefone = telefone;
         this.nomeUsuario = nomeUsuario;
         this.senha = senha;
+        this.logado = false;
     }
 
+    public boolean equals(String nome_usuario, String senha){
+        return this.nomeUsuario.equals(nome_usuario) && this.senha.equals(senha);
+    }
+
+    public String toString(){
+        return this.nome+";"+this.endereco+";"+this.email+";"+this.telefone+";"+this.nomeUsuario+";"+this.senha+";";
+    }
+    //Get e set
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
+    }
 
     public String getNome() {
         return nome;

@@ -1,13 +1,10 @@
 package Menu;
 
-import Sistema.LogicaSistema;
-
+import Sistema.*;
 import static Menu.ExibeMenu.exibeMenuCadastro;
 
-
 public abstract class TrataMenu {
-    public static void tratarMenuGeral(int opcao){
-        LogicaSistema sistema = new LogicaSistema();
+    public static void tratarMenuGeral(int opcao, LogicaSistema sistema){
         switch (opcao){
             case 1:
                 sistema.tratarLogin();
@@ -16,7 +13,8 @@ public abstract class TrataMenu {
                 int opcao_menu_geral = exibeMenuCadastro();
                 sistema.tratarCadastro(opcao_menu_geral);
                 break;
-
+            case 3:
+                sistema.systemLeave();
         }
     }
 }
