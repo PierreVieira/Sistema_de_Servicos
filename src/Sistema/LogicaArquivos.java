@@ -55,7 +55,7 @@ class LogicaArquivos {
                 }
             }
             bw.close();
-            mensagem = "Usuário salvo com sucesso";
+            mensagem = "Volte sempre!\n---------------------------------";
         } catch (IOException e) {
             mensagem = "Erro de escrita no arquivo" + this.nome_arquivo;
         }finally {

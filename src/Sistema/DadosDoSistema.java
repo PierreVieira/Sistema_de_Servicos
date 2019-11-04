@@ -12,7 +12,7 @@ public class DadosDoSistema {
     private ArrayList<Cliente> clientes = new ArrayList<>();
     private LogicaArquivos arq;
     public DadosDoSistema(){
-        arq = new LogicaArquivos("dados.txt");
+        arq = new LogicaArquivos("usuarios.txt");
         inicializarDadosDoSistema();
     }
     private void inicializarDadosDoSistema(){

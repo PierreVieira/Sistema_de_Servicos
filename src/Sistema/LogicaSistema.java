@@ -114,7 +114,7 @@ public class LogicaSistema {
     }
 
     public void systemLeave(){
-        LogicaArquivos arq = new LogicaArquivos("dados.txt");
+        LogicaArquivos arq = new LogicaArquivos("usuarios.txt");
         arq.escreveNoArquivo(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
         System.exit(0);
     }
