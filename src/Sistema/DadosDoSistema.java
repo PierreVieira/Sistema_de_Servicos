@@ -38,6 +38,35 @@ public class DadosDoSistema {
             }
         }
     }
+    private void deslogarDiferentes(String nome, String senha){
+        deslogarClientesDiferentes(nome, senha);
+        deslogarPrestadores(nome, senha);
+        deslogarAdministradores(nome, senha);
+    }
+
+    private void deslogarAdministradores(String nome, String senha) {
+        for(int i = 0; i < this.administradores.size(); i++){
+            if(!(this.administradores.get(i).getNome().equals(nome) && this.administradores.get(i).getSenha().equals(senha))){
+                this.administradores.get(i).setLogado(false);
+            }
+        }
+    }
+
+    private void deslogarPrestadores(String nome, String senha) {
+        for(int i = 0; i < this.profissionais.size(); i++){
+            if(!(this.profissionais.get(i).getNome().equals(nome) && this.profissionais.get(i).getSenha().equals(senha))){
+                this.profissionais.get(i).setLogado(false);
+            }
+        }
+    }
+
+    private void deslogarClientesDiferentes(String nome, String senha) {
+        for(int i = 0; i < this.clientes.size(); i++){
+            if(!(this.clientes.get(i).getNome().equals(nome) && this.clientes.get(i).getSenha().equals(senha))){
+                this.clientes.get(i).setLogado(false);
+            }
+        }
+    }
 
     public ArrayList<Administrador> getAdministradores() {
         return administradores;

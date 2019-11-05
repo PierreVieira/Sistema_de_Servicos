@@ -76,7 +76,19 @@ public class LogicaSistema {
             System.out.println("Não foi encontrado nenhum perfil com o nome e senha informados");
         }
         else{
-            System.out.println("Login realizado com sucesso");
+            tratarLoginContinuacao(nome, senha);
+        }
+    }
+
+    private void tratarLoginContinuacao(String nome, String senha) {
+        if(temCliente(nome, senha)){
+            //oi
+        }
+        else if(temAdministrador(nome, senha)){
+            //ola
+        }
+        else if(temProfissional(nome, senha)){
+            //kkkk
         }
     }
 
