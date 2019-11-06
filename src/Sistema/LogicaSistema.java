@@ -3,6 +3,9 @@ import Concretos.Administrador;
 import Concretos.Cliente;
 import Concretos.Profissional;
 import java.util.Scanner;
+
+import static Menu.ExibeMenu.*;
+import static Menu.TrataMenu.*;
 import static Principal.Main.main;
 
 
@@ -49,8 +52,10 @@ public class LogicaSistema {
         email = teclado.nextLine();
         System.out.print("Informe o telefone: ");
         telefone = teclado.nextLine();
-        System.out.print("Informe o nome de usuario: ");
-        nome_usuario = teclado.nextLine();
+        do{
+            System.out.print("Informe o nome de usuario: ");
+            nome_usuario = teclado.nextLine();
+        }while(jaTemUsuarioComNome(nome_usuario));
         System.out.print("Informe a senha: ");
         senha = teclado.nextLine();
         if(tipo.equals("ADM")){
@@ -62,6 +67,25 @@ public class LogicaSistema {
         else{
             this.dados.getClientes().add(new Cliente(nome, endereco, email, telefone, nome_usuario, senha));
         }
+    }
+
+    private boolean jaTemUsuarioComNome(String nome_usuario) {
+        for(Cliente cliente: this.dados.getClientes()){
+            if(cliente.getNome().equals(nome_usuario)){
+                return true;
+            }
+        }
+        for(Profissional profissional: this.dados.getProfissionais()){
+            if(profissional.getNome().equals(nome_usuario)){
+                return true;
+            }
+        }
+        for(Administrador administrador: this.dados.getAdministradores()){
+            if(administrador.getNome().equals(nome_usuario)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void tratarLogin(){
@@ -81,15 +105,21 @@ public class LogicaSistema {
     }
 
     private void tratarLoginContinuacao(String nome, String senha) {
+        int opcao;
+        dados.deslogarDiferentes(nome, senha);
         if(temCliente(nome, senha)){
-            //oi
+            opcao = exibeMenuCliente();
+            tatarMenuCliente(opcao);
         }
         else if(temAdministrador(nome, senha)){
-            //ola
+            opcao = exibeMenuAdministrador();
+            tratarMenuProfissional(opcao);
         }
         else if(temProfissional(nome, senha)){
-            //kkkk
+            opcao = exibeMenuPrestador();
+            tratarMenuAdministrador(opcao);
         }
+
     }
 
     private boolean temAdministrador(String nome, String senha) {

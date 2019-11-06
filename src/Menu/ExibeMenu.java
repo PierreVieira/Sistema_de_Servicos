@@ -22,7 +22,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    static int exibeMenuCadastro(){
+    public static int exibeMenuCadastro(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ CADASTRO =========");
@@ -43,7 +43,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    static int exibeMenuAdministrador(){
+    public static int exibeMenuAdministrador(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ ADMINISTRADOR =========");
@@ -65,7 +65,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    static int exibeMenuCliente(){
+    public static int exibeMenuCliente(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ CLIENTE =========");
@@ -86,7 +86,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    static int exibeMenuPrestador(){
+    public static int exibeMenuPrestador(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ PRESTADOR =========");
@@ -95,6 +95,30 @@ public abstract class ExibeMenu {
         System.out.println("[3] Executar pedido");
         System.out.println("[4] Pesquisar pedidos");
         System.out.println("[5] Sair");
+        System.out.println("=================================");
+        do {
+            System.out.print("Escolha uma opção: ");
+            opcao = teclado.nextInt();
+            System.out.println("---------------------------------");
+            if(opcao > 5 || opcao < 1){
+                System.out.println("Opção inválida, por favor escolha uma opção válida");
+            }
+        }while(opcao > 5 || opcao < 1);//Se a opção escolhida não for válida
+        return opcao;
+    }
+
+    public static int exibeMenuServiços(){
+        int opcao;
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("========= MENÚ SERVIÇOS =========");
+        System.out.println("[1] Manutenção preventiva");
+        System.out.println("[2] Formatação");
+        System.out.println("[3] Backup");
+        System.out.println("[4] Recuperação de arquivos");
+        System.out.println("[5] Instalação de programas");
+        System.out.println("[6] Troca de peças de desktops");
+        System.out.println("[7] Troca de peças de notebooks");
+        System.out.println("[8] Troca de peças de celulares");
         System.out.println("=================================");
         do {
             System.out.print("Escolha uma opção: ");

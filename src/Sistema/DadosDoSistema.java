@@ -3,6 +3,7 @@ package Sistema;
 import Concretos.Administrador;
 import Concretos.Cliente;
 import Concretos.Profissional;
+import Concretos.Servicos;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ public class DadosDoSistema {
     private ArrayList<Administrador> administradores = new ArrayList<>();
     private ArrayList<Profissional> profissionais = new ArrayList<>();
     private ArrayList<Cliente> clientes = new ArrayList<>();
+    private ArrayList<Servicos> servicos = new ArrayList<>();
     private LogicaArquivos arq;
     public DadosDoSistema(){
         arq = new LogicaArquivos("usuarios.txt");
@@ -38,7 +40,7 @@ public class DadosDoSistema {
             }
         }
     }
-    private void deslogarDiferentes(String nome, String senha){
+    public void deslogarDiferentes(String nome, String senha){
         deslogarClientesDiferentes(nome, senha);
         deslogarPrestadores(nome, senha);
         deslogarAdministradores(nome, senha);
