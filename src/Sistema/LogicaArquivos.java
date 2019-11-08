@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 class LogicaArquivos {
-    private String nome_arquivo;
-    LogicaArquivos(String nome_arquivo){
-        this.nome_arquivo = nome_arquivo;
+    private String caminho;
+    LogicaArquivos(){
     }
 
-    ArrayList<String[]> pegaDoArquivo(){
+    ArrayList<String[]> pegaDoArquivo(String caminho){
         Scanner scanner = null;
+        this.caminho = caminho;
         ArrayList<String[]> string_dados = new ArrayList<>();
         String leitura_do_arquivo;
         try {
-            scanner = new Scanner(new FileReader(this.nome_arquivo));
+            scanner = new Scanner(new FileReader(this.caminho));
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
@@ -34,7 +34,7 @@ class LogicaArquivos {
     void escreveNoArquivo(ArrayList<Administrador> administradores, ArrayList<Profissional> profissionais, ArrayList<Cliente> clientes){
         String mensagem = null;
         try {
-            FileWriter escritor = new FileWriter(this.nome_arquivo);
+            FileWriter escritor = new FileWriter(this.caminho);
             BufferedWriter bw = new BufferedWriter(escritor);
             bw.flush();
             for(Administrador administrador: administradores){
@@ -57,9 +57,17 @@ class LogicaArquivos {
             bw.close();
             mensagem = "Volte sempre!\n---------------------------------";
         } catch (IOException e) {
-            mensagem = "Erro de escrita no arquivo" + this.nome_arquivo;
+            mensagem = "Erro de escrita no arquivo" + this.caminho;
         }finally {
             System.out.println(mensagem);
         }
+    }
+
+    public String getCaminho() {
+        return caminho;
+    }
+
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
     }
 }

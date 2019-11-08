@@ -10,22 +10,15 @@ import static Principal.Main.main;
 
 
 public class LogicaSistema {
-    private boolean administradorLogado;
     private DadosDoSistema dados;
     public LogicaSistema(DadosDoSistema dados){
-        administradorLogado = false;
         this.dados = dados;
     }
 
     public void tratarCadastro(int opcao){
         switch (opcao){
             case 1: //Cadastrar Administrador
-                if(!administradorLogado){
-                    System.out.println("Não há nenhum adminsitrador logado no sistema!");
-                }
-                else {
-                    cadastrar("ADM");
-                }
+                cadastrar("ADM");
                 break;
             case 2://Cadastrar Profissional
                 cadastrar("PROF");
@@ -113,11 +106,12 @@ public class LogicaSistema {
         }
         else if(temAdministrador(nome, senha)){
             opcao = exibeMenuAdministrador();
-            tratarMenuProfissional(opcao);
+            tratarMenuAdministrador(opcao);
         }
         else if(temProfissional(nome, senha)){
             opcao = exibeMenuPrestador();
-            tratarMenuAdministrador(opcao);
+            tratarMenuProfissional(opcao);
+
         }
 
     }
@@ -126,7 +120,6 @@ public class LogicaSistema {
         for(int i = 0; i < dados.getAdministradores().size(); ++i){
             if(dados.getAdministradores().get(i).equals(nome, senha)){
                 dados.getAdministradores().get(i).setLogado(true);
-                this.administradorLogado = true;
                 return true;
             }
         }
@@ -137,7 +130,6 @@ public class LogicaSistema {
         for(int i = 0; i < dados.getProfissionais().size(); ++i){
             if(dados.getProfissionais().get(i).equals(nome, senha)){
                 dados.getProfissionais().get(i).setLogado(true);
-                this.administradorLogado = false;
                 return true;
             }
         }
@@ -148,7 +140,6 @@ public class LogicaSistema {
         for(int i = 0; i < dados.getClientes().size(); ++i){
             if(dados.getClientes().get(i).equals(nome, senha)){
                 dados.getClientes().get(i).setLogado(true);
-                this.administradorLogado = false;
                 return true;
             }
         }
@@ -156,8 +147,13 @@ public class LogicaSistema {
     }
 
     public void systemLeave(){
-        LogicaArquivos arq = new LogicaArquivos("usuarios.txt");
+        LogicaArquivos arq = new LogicaArquivos();
+        arq.setCaminho("TextFiles/usuarios.txt");
         arq.escreveNoArquivo(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
         System.exit(0);
+    }
+
+    public DadosDoSistema getDados() {
+        return dados;
     }
 }
