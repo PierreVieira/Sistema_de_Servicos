@@ -1,2 +1,2 @@
-Recuperação de arquivos;pierre;980.0;
 Backup;pierre;400.0;
+Troca de peças de desktop;pierre;410.0;

@@ -1,2 +1,2 @@
-Recuperação de arquivos;pierre;800.0;t;
-Troca de peças de desktop;pierre;80.0;t;
+Instalação de programas;pierre;220.0;t;
+Instalação de programas;o;20.0;t;

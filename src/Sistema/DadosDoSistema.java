@@ -1,3 +1,6 @@
+//Antônio Pierre Maritns Vieira
+//Eduardo Vinícius Silva de Lima
+//Thiago Danilo Souza Pereira
 package Sistema;
 
 import Usuarios.Administrador;
@@ -37,7 +40,7 @@ public class DadosDoSistema {
             nick_profissional = s[1];
             preco = Double.parseDouble(s[2]);
             nick_cliente = s[3];
-            this.getServicos_pre_executados().add(new ServicoPreExecutado(tipo_servico, nick_profissional, preco, nick_cliente));
+            this.getServicos_executados().add(new ServicoExecutado(tipo_servico, nick_profissional, preco, nick_cliente));
         }
     }
 
@@ -136,55 +139,35 @@ public class DadosDoSistema {
         }
     }
 
-    public ArrayList<Administrador> getAdministradores() {
+    ArrayList<Administrador> getAdministradores() {
         return administradores;
     }
 
-    public ArrayList<Profissional> getProfissionais() {
+    ArrayList<Profissional> getProfissionais() {
         return profissionais;
     }
 
-    public ArrayList<Cliente> getClientes() {
+    ArrayList<Cliente> getClientes() {
         return clientes;
     }
 
-    public ArrayList<ServicoInativo> getServicos_inativos() {
+    ArrayList<ServicoInativo> getServicos_inativos() {
         return servicos_inativos;
     }
 
-    public void setServicos_inativos(ArrayList<ServicoInativo> servicos_inativos) {
-        this.servicos_inativos = servicos_inativos;
-    }
-
-    public ArrayList<ServicoValido> getServicos_validos() {
+    ArrayList<ServicoValido> getServicos_validos() {
         return servicos_validos;
-    }
-
-    public void setServicos_validos(ArrayList<ServicoValido> servicos_validos) {
-        this.servicos_validos = servicos_validos;
     }
 
     public ArrayList<ServicoValidoComPrestador> getServicos_confirmados_com_prestador() {
         return servicos_confirmados_com_prestador;
     }
 
-    public void setServicos_confirmados_com_prestador(ArrayList<ServicoValidoComPrestador> servicos_confirmados_com_prestador) {
-        this.servicos_confirmados_com_prestador = servicos_confirmados_com_prestador;
-    }
-
-    public ArrayList<ServicoPreExecutado> getServicos_pre_executados() {
+    ArrayList<ServicoPreExecutado> getServicos_pre_executados() {
         return servicos_pre_executados;
     }
 
-    public void setServicos_pre_executados(ArrayList<ServicoPreExecutado> servicos_pre_executados) {
-        this.servicos_pre_executados = servicos_pre_executados;
-    }
-
-    public ArrayList<ServicoExecutado> getServicos_executados() {
+    ArrayList<ServicoExecutado> getServicos_executados() {
         return servicos_executados;
-    }
-
-    public void setServicos_executados(ArrayList<ServicoExecutado> servicos_executados) {
-        this.servicos_executados = servicos_executados;
     }
 }

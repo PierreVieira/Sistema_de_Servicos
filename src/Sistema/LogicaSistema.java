@@ -1,15 +1,14 @@
+//Antônio Pierre Maritns Vieira
+//Eduardo Vinícius Silva de Lima
+//Thiago Danilo Souza Pereira
 package Sistema;
-import Servicos.ServicoExecutado;
-import Servicos.ServicoPreExecutado;
-import Servicos.ServicoValido;
-import Servicos.ServicoValidoComPrestador;
+
+import Servicos.*;
 import Usuarios.Administrador;
 import Usuarios.Cliente;
 import Usuarios.Profissional;
 import Usuarios.Usuario;
-
 import java.util.Scanner;
-
 import static Menu.ExibeMenu.*;
 import static Menu.TrataMenu.*;
 import static Principal.Main.main;
@@ -105,9 +104,8 @@ public class LogicaSistema {
         }
     }
 
-    public static ServicoExecutado identificaServicoASerExecutado(LogicaSistema sistema){
-        int opcao = exibeMenuPreExecutados(sistema.getDados().getServicos_pre_executados(), sistema.pegaUsuarioLogado().getNomeUsuario());
-
+    public static ServicoPreExecutado identificaServicoASerExecutado(LogicaSistema sistema){
+        return exibeMenuPreExecutados(sistema.getDados().getServicos_pre_executados(), sistema.pegaUsuarioLogado().getNomeUsuario());
     }
     private void tratarLoginContinuacao(String nome, String senha) {
         int opcao;
@@ -158,7 +156,7 @@ public class LogicaSistema {
         return false;
     }
 
-    public Usuario pegaUsuarioLogado(){
+    Usuario pegaUsuarioLogado(){
         for(Cliente cliente: dados.getClientes()){
             if(cliente.isLogado()){
                 return cliente;//Retorna o cliente logado
@@ -177,6 +175,68 @@ public class LogicaSistema {
         return null;//Não tem ninguem logado na plataforma (bugou)
     }
 
+    public void listarPedidosTodosPedidos(){
+        listarServicosPendentes();
+        listarServicosAtivosSemPrestador();
+        listarServicosComPrestador();
+        listarServicosPreExecutados();
+        listarServicosExecutados();
+    }
+
+    private void listarServicosExecutados() {
+        int cont = 1;
+        System.out.println("============ SERVIÇOS EXECUTADOS ============");
+        for (ServicoExecutado servicoExecutado: dados.getServicos_executados()){
+            System.out.printf("[%d] %s\n", cont, servicoExecutado.getTipoServico());
+            System.out.println("Nome de usuário do profisisonal: "+servicoExecutado.getNome_usuario_profissional());
+            System.out.println("Nome de usuário do cliente: "+servicoExecutado.getNome_usuario_cliente());
+            System.out.println("------------------------------------");
+            cont++;
+        }
+    }
+
+    private void listarServicosPreExecutados() {
+        int cont = 1;
+        System.out.println("============ SERVIÇOS PRÉ EXECUTADOS ============");
+        for (ServicoPreExecutado preExecutado: dados.getServicos_pre_executados()){
+            System.out.printf("[%d] %s\n", cont, preExecutado.getTipoServico());
+            System.out.println("Nome de usuário do cliente: "+preExecutado.getNome_usuario_cliente());
+            System.out.println("Nome de usuário do profissional: "+preExecutado.getNome_usuario_profissional());
+            System.out.println("------------------------------------");
+            cont++;
+        }
+    }
+
+    private void listarServicosComPrestador() {
+        int cont = 1;
+        System.out.println("=== SERVIÇOS COM PROFISSIONAL NÃO REQUERIDOS POR UM CLIENTE ===");
+        for (ServicoValidoComPrestador com_prestador: dados.getServicos_confirmados_com_prestador()){
+            System.out.printf("[%d] %s\n", cont, com_prestador.getTipoServico());
+            System.out.println("Nome de usuário do profissional: "+com_prestador.getNome_usuario_profissional());
+            System.out.println("------------------------------------");
+            cont++;
+        }
+    }
+
+    private void listarServicosAtivosSemPrestador() {
+        int cont = 1;
+        System.out.println("==== SERVIÇOS CONFIRMADOS POR UM ADMINISTADOR ====");
+        for (ServicoValido valido: dados.getServicos_validos()){
+            System.out.printf("[%d] %s\n", cont, valido.getTipoServico());
+            System.out.println("------------------------------------");
+            cont++;
+        }
+    }
+
+    private void listarServicosPendentes() {
+        int cont = 1;
+        System.out.println("=== SERVIÇOS NÃO CONFIRMADOS POR UM ADMINISTRADOR ===");
+        for (ServicoInativo inativo: dados.getServicos_inativos()){
+            System.out.printf("[%d] %s\n", cont, inativo.getTipoServico());
+            System.out.println("------------------------------------");
+            cont++;
+        }
+    }
 
     public DadosDoSistema getDados() {
         return dados;

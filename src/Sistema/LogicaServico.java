@@ -127,11 +127,13 @@ public abstract class LogicaServico {
     public static void pesquisarPedidosComPrecosCadastradosENaoExecutados(LogicaSistema sistema) {
         Profissional profissional = (Profissional) sistema.pegaUsuarioLogado();
         assert profissional != null;
+        int cont = 0;
         //Pesquisa por serviços que não tem cliente
         for (ServicoValidoComPrestador servico: sistema.getDados().getServicos_confirmados_com_prestador()){
             if(servico.getNome_usuario_profissional().equals(profissional.getNomeUsuario())){
                 System.out.println("[Serviço sem cliente]\nTipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
                 System.out.println("--------------------------------------------");
+                cont++;
             }
         }
         //Pesquisa por seviços que já tem um cliente
@@ -140,7 +142,11 @@ public abstract class LogicaServico {
                 System.out.println("[Serviço com cliente]\nTipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
                 System.out.println("Nome de usuário do cliente: "+servico.getNome_usuario_cliente());
                 System.out.println("--------------------------------------------");
+                cont++;
             }
+        }
+        if(cont == 0){
+            System.out.println("Não há nenhum serviço em seu nome!");
         }
     }
 
@@ -201,10 +207,13 @@ public abstract class LogicaServico {
     }
 
     public static void executarServico(LogicaSistema sistema, ServicoPreExecutado servico_pre_executado){
+        ServicoExecutado executado;
         for(ServicoPreExecutado servicoPreExecutado: sistema.getDados().getServicos_pre_executados()){
             if(servico_pre_executado.toString().equals(servicoPreExecutado.toString())){
                 sistema.getDados().getServicos_pre_executados().remove(servicoPreExecutado);
-                sistema.getDados().getServicos_executados().add((ServicoExecutado) servico_pre_executado);
+                executado = new ServicoExecutado(servico_pre_executado.getTipoServico(), servico_pre_executado.getNome_usuario_profissional(), servico_pre_executado.getPreco(), servico_pre_executado.getNome_usuario_cliente());
+                sistema.getDados().getServicos_executados().add(executado);
+                break;
             }
         }
     }

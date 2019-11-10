@@ -1,3 +1,4 @@
-Formatação;
 Troca de peças de nootebook;
-Backup;
+Recuperação de arquivos;
+Formatação;
+Recuperação de arquivos;

@@ -1,0 +1,3 @@
+Troca de peças de desktop;pierre;80.0;t;
+Recuperação de arquivos;pierre;800.0;t;
+Recuperação de arquivos;pierre;980.0;t;

@@ -1,7 +1,9 @@
+//Antônio Pierre Maritns Vieira
+//Eduardo Vinícius Silva de Lima
+//Thiago Danilo Souza Pereira
 package Menu;
 
 import Servicos.ServicoPreExecutado;
-import Servicos.ServicoValido;
 import Servicos.ServicoValidoComPrestador;
 import Sistema.*;
 import static Menu.ExibeMenu.*;
@@ -92,7 +94,7 @@ public abstract class TrataMenu {
                 tratarMenuValidacao(op);
                 break;
             case 4:
-                //Listar pedidos
+                master_sistema.listarPedidosTodosPedidos();//Listar pedidos
                 break;
             case 5:
                 master_sistema.systemLeave(); //Sair

@@ -1,3 +1,6 @@
+//Antônio Pierre Maritns Vieira
+//Eduardo Vinícius Silva de Lima
+//Thiago Danilo Souza Pereira
 package Usuarios;
 
 public class Usuario {
@@ -21,7 +24,6 @@ public class Usuario {
     public String toString(){
         return this.nome+";"+this.endereco+";"+this.email+";"+this.telefone+";"+this.nomeUsuario+";"+this.senha+";";
     }
-    //Get e set
 
     public boolean isLogado() {
         return logado;
@@ -35,48 +37,12 @@ public class Usuario {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
     public String getNomeUsuario() {
         return nomeUsuario;
     }
 
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-    }
-
     public String getSenha() {
         return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 }
 

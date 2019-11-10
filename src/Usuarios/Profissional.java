@@ -1,3 +1,6 @@
+//Antônio Pierre Maritns Vieira
+//Eduardo Vinícius Silva de Lima
+//Thiago Danilo Souza Pereira
 package Usuarios;
 
 public class Profissional extends Usuario{

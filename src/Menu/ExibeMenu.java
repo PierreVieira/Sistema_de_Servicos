@@ -1,10 +1,11 @@
+//Antônio Pierre Maritns Vieira
+//Eduardo Vinícius Silva de Lima
+//Thiago Danilo Souza Pereira
 package Menu;
 
 import Servicos.ServicoPreExecutado;
 import Servicos.ServicoValido;
 import Servicos.ServicoValidoComPrestador;
-import Sistema.DadosDoSistema;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,7 +33,6 @@ public abstract class ExibeMenu {
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ CADASTRO =========");
-        System.out.println("[1] Cadastrar administrador");
         System.out.println("[2] Cadastrar profissional");
         System.out.println("[3] Cadastrar cliente");
         System.out.println("[4] Voltar");
@@ -42,10 +42,10 @@ public abstract class ExibeMenu {
             System.out.print("Escolha uma opção: ");
             opcao = teclado.nextInt();
             System.out.println("---------------------------------");
-            if(opcao > 5 || opcao < 1){
+            if(opcao > 5 || opcao < 2){
                 System.out.println("Opção inválida, por favor escolha uma opção válida");
             }
-        }while(opcao > 5 || opcao < 1);//Se a opção escolhida não for válida
+        }while(opcao > 5 || opcao < 2);//Se a opção escolhida não for válida
         return opcao;
     }
 
@@ -208,13 +208,13 @@ public abstract class ExibeMenu {
         for(ServicoValidoComPrestador valido: servico){
             System.out.printf("[%d] %s\n", cont, valido.getTipoServico());
             System.out.println("R$ "+valido.getPreco());
+            System.out.println("---------------------------------");
             cont++;
         }
         System.out.println("==============================");
         do{
             System.out.print("Escolha uma opção: ");
             opcao = teclado.nextInt();
-            System.out.println("---------------------------------");
             if(opcao > t_servico || opcao < 1){
                 System.out.println("Opção inválida, por favor escolha uma opção válida");
             }
@@ -222,10 +222,42 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    public static int exibeMenuPreExecutados(ArrayList<ServicoPreExecutado> pre_executados, String nick_profissional){
+    public static ServicoPreExecutado exibeMenuPreExecutados(ArrayList<ServicoPreExecutado> pre_executados, String nick_profissional){
         /*O que deve-se fazer: percorrer o arraylist dos pre_executados jogando em um novo arraylist só de executados os
         * que o profissional tem nome
         */
-       return 0;
+        ArrayList<ServicoPreExecutado> pre_executados_pelo_profissional = new ArrayList<>();
+        Scanner teclado = new Scanner(System.in);
+        int t_servico, opcao, cont = 1;
+        for(ServicoPreExecutado valido: pre_executados){
+            if(valido.getNome_usuario_profissional().equals(nick_profissional)){
+                pre_executados_pelo_profissional.add(valido);
+            }
+        }
+        t_servico = pre_executados_pelo_profissional.size();
+        if(t_servico == 0){
+            System.out.println("Não há serviços disponíveis para você");
+            return null;
+        }
+        else{
+            System.out.println("====== SERVIÇOS DISPONÍVEIS ======");
+            for(ServicoPreExecutado valido: pre_executados_pelo_profissional){
+                System.out.printf("[%d] %s\n", cont, valido.getTipoServico());
+                System.out.println("Valor cobrado: R$ "+valido.getPreco());
+                System.out.println("Nome de usuário do cliente: "+valido.getNome_usuario_cliente());
+                cont++;
+                System.out.println("---------------------------------");
+            }
+            System.out.println("==============================");
+            do{
+                System.out.print("Escolha uma opção: ");
+                opcao = teclado.nextInt();
+                System.out.println("---------------------------------");
+                if(opcao > t_servico || opcao < 1){
+                    System.out.println("Opção inválida, por favor escolha uma opção válida");
+                }
+            }while(opcao > t_servico || opcao < 1);//Se a opção escolhida não for válida
+            return pre_executados_pelo_profissional.get(t_servico-1);
+        }
     }
 }
