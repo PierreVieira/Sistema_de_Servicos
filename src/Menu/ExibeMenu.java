@@ -1,5 +1,7 @@
 package Menu;
 
+import Servicos.ServicoValido;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class ExibeMenu {
@@ -22,7 +24,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    public static int exibeMenuCadastro(){
+    static int exibeMenuCadastro(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ CADASTRO =========");
@@ -105,7 +107,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    public static int exibeMenuServicos(){
+    static int exibeMenuServicos(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ SERVIÇOS =========");
@@ -129,7 +131,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    public static int exibeMenuValidacao(){
+    static int exibeMenuValidacao(){
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ VALIDAÇÃO =========");
@@ -170,6 +172,27 @@ public abstract class ExibeMenu {
                 System.out.println("Opção inválida, por favor escolha uma opção válida");
             }
         }while(opcao > 8 || opcao < 1);//Se a opção escolhida não for válida
+        return opcao;
+    }
+
+    static int exibeMenuServicosAtivos(ArrayList<ServicoValido> validos){
+        Scanner teclado = new Scanner(System.in);
+        int t_validos, opcao, cont = 1;
+        t_validos = validos.size();
+        System.out.println("====== SERVIÇOS VÁLIDOS ======");
+        for(ServicoValido valido: validos){
+            System.out.printf("[%d] %s\n", cont, valido.getTipoServico());
+            cont++;
+        }
+        System.out.println("==============================");
+        do{
+            System.out.print("Escolha uma opção: ");
+            opcao = teclado.nextInt();
+            System.out.println("---------------------------------");
+            if(opcao > t_validos || opcao < 1){
+                System.out.println("Opção inválida, por favor escolha uma opção válida");
+            }
+        }while(opcao > t_validos || opcao < 1);//Se a opção escolhida não for válida
         return opcao;
     }
 }

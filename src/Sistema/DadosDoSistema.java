@@ -1,8 +1,8 @@
 package Sistema;
 
-import Concretos.Administrador;
-import Concretos.Cliente;
-import Concretos.Profissional;
+import Usuarios.Administrador;
+import Usuarios.Cliente;
+import Usuarios.Profissional;
 import Servicos.*;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class DadosDoSistema {
     private ArrayList<Cliente> clientes = new ArrayList<>();
     private ArrayList<ServicoInativo> servicos_inativos = new ArrayList<>();//Serviços que ainda não ativos por um administrador e já tem usuário pedindo.
     private ArrayList<ServicoValido> servicos_validos = new ArrayList<>();//Serviços que já foram confirmados, mas ainda não tem prestador
-    private ArrayList<ServicoConfirmadoComPrestador> servicos_confirmados_com_prestador = new ArrayList<>();//Serviços que já foram confirmados, tem prestador, mas ainda não tem requisição de um cliente
+    private ArrayList<ServicoValidoComPrestador> servicos_confirmados_com_prestador = new ArrayList<>();//Serviços que já foram confirmados, tem prestador, mas ainda não tem requisição de um cliente
     private ArrayList<ServicoPreExecutado> servicos_pre_executados = new ArrayList<>();//Serviços que já tem cliente e prestador, mas que ainda não foram executados pelo prestador
     private ArrayList<ServicoExecutado> servicos_executados = new ArrayList<>();//Serviços que já tem cliente, prestador e já foram executados pelo prestador
     private LogicaArquivos arq;
@@ -22,6 +22,20 @@ public class DadosDoSistema {
         arq = new LogicaArquivos();
         inicializarDadosDoSistemaUsuarios();
         inicializarDadosDoSistemaServicosInativosEValidos();
+        inicializarDadosDoSistemaServicosComPrestador();
+    }
+
+    private void inicializarDadosDoSistemaServicosComPrestador() {
+        //Vai inicializar o array de serviços com prestadores
+        String tipo_servico, nome_profissional;
+        double preco;
+        ArrayList<String[]> strings_servicos_com_profissionais = arq.pegaDoArquivo("TextFiles/servicos_confirmados_com_prestador.txt");
+        for(String[] s: strings_servicos_com_profissionais){
+            tipo_servico = s[0];
+            nome_profissional = s[1];
+            preco = Double.parseDouble(s[2]);
+            this.servicos_confirmados_com_prestador.add(new ServicoValidoComPrestador(tipo_servico,nome_profissional, preco));
+        }
     }
 
     private void inicializarDadosDoSistemaServicosInativosEValidos() {
@@ -62,7 +76,7 @@ public class DadosDoSistema {
             }
         }
     }
-    public void deslogarDiferentes(String nome, String senha){
+    void deslogarDiferentes(String nome, String senha){
         deslogarClientesDiferentes(nome, senha);
         deslogarPrestadores(nome, senha);
         deslogarAdministradores(nome, senha);
@@ -120,11 +134,11 @@ public class DadosDoSistema {
         this.servicos_validos = servicos_validos;
     }
 
-    public ArrayList<ServicoConfirmadoComPrestador> getServicos_confirmados_com_prestador() {
+    public ArrayList<ServicoValidoComPrestador> getServicos_confirmados_com_prestador() {
         return servicos_confirmados_com_prestador;
     }
 
-    public void setServicos_confirmados_com_prestador(ArrayList<ServicoConfirmadoComPrestador> servicos_confirmados_com_prestador) {
+    public void setServicos_confirmados_com_prestador(ArrayList<ServicoValidoComPrestador> servicos_confirmados_com_prestador) {
         this.servicos_confirmados_com_prestador = servicos_confirmados_com_prestador;
     }
 

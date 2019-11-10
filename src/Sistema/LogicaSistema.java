@@ -1,9 +1,8 @@
 package Sistema;
-import Concretos.Administrador;
-import Concretos.Cliente;
-import Concretos.Profissional;
-import Concretos.Usuario;
-import Servicos.ServicoInativo;
+import Usuarios.Administrador;
+import Usuarios.Cliente;
+import Usuarios.Profissional;
+import Usuarios.Usuario;
 
 import java.util.Scanner;
 
@@ -180,6 +179,8 @@ public class LogicaSistema {
         arq.escreveNoArquivoServicosInativos(dados.getServicos_inativos());
         arq.setCaminho("TextFiles/servicos_validos.txt");
         arq.escreveNoArquivoValidos(dados.getServicos_validos());
+        arq.setCaminho("TextFiles/servicos_confirmados_com_prestador.txt");
+        arq.escreveNoArquivoValidosComPrestador(dados.getServicos_confirmados_com_prestador());
         arq.setCaminho("TextFiles/usuarios.txt");
         arq.escreveNoArquivoUsuarios(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
         System.exit(0);

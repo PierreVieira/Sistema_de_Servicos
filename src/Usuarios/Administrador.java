@@ -1,4 +1,4 @@
-package Concretos;
+package Usuarios;
 
 public class Administrador extends Usuario {
 

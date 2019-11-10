@@ -1,10 +1,10 @@
-package Concretos;
+package Usuarios;
 
 public class Usuario {
 
     private String nome, endereco, email, telefone, nomeUsuario, senha;
     private boolean logado;
-    public Usuario(String nome, String endereco, String email, String telefone, String nomeUsuario, String senha) {
+    Usuario(String nome, String endereco, String email, String telefone, String nomeUsuario, String senha) {
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;

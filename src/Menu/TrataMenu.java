@@ -1,6 +1,13 @@
 package Menu;
 
+import Servicos.Servico;
+import Servicos.ServicoValido;
+import Servicos.ServicoValidoComPrestador;
 import Sistema.*;
+import Usuarios.Profissional;
+
+import java.util.Scanner;
+
 import static Menu.ExibeMenu.*;
 import static Sistema.LogicaServico.*;
 
@@ -41,13 +48,14 @@ public abstract class TrataMenu {
 
 
     public static void tratarMenuProfissional(int opcao){
+        int choice;
         switch(opcao){
             case 1:
-                int choice = exibeMenuServicos();
+                choice = exibeMenuServicos();
                 cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um novo serviço como inativo
                 break;
             case 2:
-                //Selecionar um serviço sem informando o preço que cobra
+                darPrecoNumServicoValido();//Cadastrar um novo pedido com prestador
                 break;
             case 3:
                 //Executar pedidos que já tenha um cliente confirmado
@@ -59,6 +67,43 @@ public abstract class TrataMenu {
                 master_sistema.systemLeave(); //Sair
                 break;
         }
+    }
+
+    private static void darPrecoNumServicoValido() {
+        Scanner teclado = new Scanner(System.in);
+        int choice;
+        double preco;
+        if(master_sistema.getDados().getServicos_validos().size() == 0){
+            System.out.println("Não há nenhum serviço aceito por um administrador para você dar o preço");
+        }
+        else{
+            choice = escolheServicoAtivo();
+            ServicoValido valido = obter_servico_valido(choice);
+            removerUmServicoValido(valido);
+            System.out.print("Informe um preço que irá cobrar para o serviço selecionado R$: ");
+            preco = teclado.nextDouble();
+            inseririUmServicoComPrestador(valido, preco);
+        }
+    }
+
+    private static void inseririUmServicoComPrestador(ServicoValido valido, double preco) {
+        Profissional profissional;
+        profissional = (Profissional) master_sistema.pegaUsuarioLogado();//Encontra o profissional que está logado no sistema
+        ServicoValidoComPrestador valido_com_prestador = new ServicoValidoComPrestador(valido.getTipoServico(), profissional.getNome(), preco);
+        master_sistema.getDados().getServicos_confirmados_com_prestador().add(valido_com_prestador);//Insere um novo serviço com preço
+    }
+
+
+    private static void removerUmServicoValido(ServicoValido valido) {
+        master_sistema.getDados().getServicos_validos().remove(valido);
+    }
+
+    private static ServicoValido obter_servico_valido(int choice) {
+        return master_sistema.getDados().getServicos_validos().get(choice-1);
+    }
+
+    private static int escolheServicoAtivo() {
+        return exibeMenuServicosAtivos(master_sistema.getDados().getServicos_validos());
     }
 
     public static void tratarMenuAdministrador(int opcao){

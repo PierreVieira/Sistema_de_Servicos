@@ -1,8 +1,9 @@
 package Sistema;
 
-import Concretos.Administrador;
-import Concretos.Cliente;
-import Concretos.Profissional;
+import Servicos.ServicoValidoComPrestador;
+import Usuarios.Administrador;
+import Usuarios.Cliente;
+import Usuarios.Profissional;
 import Servicos.ServicoValido;
 import Servicos.ServicoInativo;
 
@@ -25,6 +26,7 @@ class LogicaArquivos {
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+        assert scanner != null;
         while (scanner.hasNext()) {
             leitura_do_arquivo = scanner.nextLine();
             string_dados.add(leitura_do_arquivo.split(";"));
@@ -95,11 +97,26 @@ class LogicaArquivos {
         }
     }
 
+    void escreveNoArquivoValidosComPrestador(ArrayList<ServicoValidoComPrestador> servicos) {
+        try {
+            FileWriter escritor = new FileWriter(this.caminho);
+            BufferedWriter bw = new BufferedWriter(escritor);
+            bw.flush();
+            for(ServicoValidoComPrestador servico: servicos){
+                bw.write(servico.toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Erro na escrita do arquivo "+this.caminho);
+        }
+    }
+
     public String getCaminho() {
         return caminho;
     }
 
-    public void setCaminho(String caminho) {
+    void setCaminho(String caminho) {
         this.caminho = caminho;
     }
 }
