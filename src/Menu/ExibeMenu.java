@@ -91,7 +91,7 @@ public abstract class ExibeMenu {
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ PRESTADOR =========");
         System.out.println("[1] Cadastrar serviço");
-        System.out.println("[2] Selecionar serviços");
+        System.out.println("[2] Dar preço em um serviço");
         System.out.println("[3] Executar pedido");
         System.out.println("[4] Pesquisar pedidos");
         System.out.println("[5] Sair");

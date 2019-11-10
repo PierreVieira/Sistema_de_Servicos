@@ -61,12 +61,16 @@ public abstract class TrataMenu {
                 //Executar pedidos que já tenha um cliente confirmado
                 break;
             case 4:
-                //Pesquisar pedidos que cadastrou-se um preço
+                pesquisarPedidosComPrecosCadastradosENaoExecutados();//Pesquisar pedidos que cadastrou-se um preço
                 break;
             case 5:
                 master_sistema.systemLeave(); //Sair
                 break;
         }
+    }
+
+    private static void pesquisarPedidosComPrecosCadastradosENaoExecutados() {
+
     }
 
     private static void darPrecoNumServicoValido() {
@@ -89,7 +93,7 @@ public abstract class TrataMenu {
     private static void inseririUmServicoComPrestador(ServicoValido valido, double preco) {
         Profissional profissional;
         profissional = (Profissional) master_sistema.pegaUsuarioLogado();//Encontra o profissional que está logado no sistema
-        ServicoValidoComPrestador valido_com_prestador = new ServicoValidoComPrestador(valido.getTipoServico(), profissional.getNome(), preco);
+        ServicoValidoComPrestador valido_com_prestador = new ServicoValidoComPrestador(valido.getTipoServico(), profissional.getNomeUsuario(), preco);
         master_sistema.getDados().getServicos_confirmados_com_prestador().add(valido_com_prestador);//Insere um novo serviço com preço
     }
 

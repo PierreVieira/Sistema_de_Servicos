@@ -27,14 +27,14 @@ public class DadosDoSistema {
 
     private void inicializarDadosDoSistemaServicosComPrestador() {
         //Vai inicializar o array de serviços com prestadores
-        String tipo_servico, nome_profissional;
+        String tipo_servico, nick_profissional;
         double preco;
         ArrayList<String[]> strings_servicos_com_profissionais = arq.pegaDoArquivo("TextFiles/servicos_confirmados_com_prestador.txt");
         for(String[] s: strings_servicos_com_profissionais){
             tipo_servico = s[0];
-            nome_profissional = s[1];
+            nick_profissional = s[1];
             preco = Double.parseDouble(s[2]);
-            this.servicos_confirmados_com_prestador.add(new ServicoValidoComPrestador(tipo_servico,nome_profissional, preco));
+            this.servicos_confirmados_com_prestador.add(new ServicoValidoComPrestador(tipo_servico, nick_profissional, preco));
         }
     }
 

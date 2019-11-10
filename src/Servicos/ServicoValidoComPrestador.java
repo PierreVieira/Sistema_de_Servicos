@@ -1,7 +1,5 @@
 package Servicos;
 
-import Usuarios.Profissional;
-
 public class ServicoValidoComPrestador extends ServicoValido{
     private String profissional;
     private double preco;
