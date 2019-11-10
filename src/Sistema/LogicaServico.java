@@ -1,12 +1,17 @@
 package Sistema;
 
+import Servicos.ServicoPreExecutado;
 import Servicos.ServicoValido;
 import Servicos.ServicoInativo;
+import Servicos.ServicoValidoComPrestador;
+import Usuarios.Cliente;
+import Usuarios.Profissional;
 
 import java.util.Scanner;
 
-import static Menu.ExibeMenu.exibeMenuNovoNome;
+import static Menu.ExibeMenu.*;
 import static Menu.TrataMenu.tratarMenuNovoNome;
+import static Menu.TrataMenu.tratarMenuServicosComPrestador;
 
 public abstract class LogicaServico {
     public static void cadastraServicoInativo(int choice, DadosDoSistema dados){
@@ -95,5 +100,82 @@ public abstract class LogicaServico {
         else{
             System.out.println("Não existem serviços inativos na plataforma");
         }
+    }
+
+    public static void darPrecoNumServicoValido(LogicaSistema sistema) {
+        Scanner teclado = new Scanner(System.in);
+        int choice;
+        double preco;
+        if(sistema.getDados().getServicos_validos().size() == 0){
+            System.out.println("Não há nenhum serviço aceito por um administrador para você dar o preço");
+        }
+        else{
+            choice = escolheServicoAtivo(sistema);
+            ServicoValido valido = obter_servico_valido(choice, sistema);
+            removerUmServicoValido(valido, sistema);
+            System.out.print("Informe um preço que irá cobrar para o serviço selecionado R$: ");
+            preco = teclado.nextDouble();
+            inserirUmServicoComPrestador(valido, preco, sistema);
+        }
+    }
+
+    private static void inserirUmServicoComPrestador(ServicoValido valido, double preco, LogicaSistema sistema) {
+        Profissional profissional;
+        profissional = (Profissional) sistema.pegaUsuarioLogado();//Encontra o profissional que está logado no sistema
+        assert profissional != null;
+        ServicoValidoComPrestador valido_com_prestador = new ServicoValidoComPrestador(valido.getTipoServico(), profissional.getNomeUsuario(), preco);
+        sistema.getDados().getServicos_confirmados_com_prestador().add(valido_com_prestador);//Insere um novo serviço com preço
+    }
+
+    public static void pesquisarPedidosComPrecosCadastradosENaoExecutados(LogicaSistema sistema) {
+        Profissional profissional = (Profissional) sistema.pegaUsuarioLogado();
+        for (ServicoValidoComPrestador servico: sistema.getDados().getServicos_confirmados_com_prestador()){
+            assert profissional != null;
+            if(servico.getNome_usuario_profissional().equals(profissional.getNomeUsuario())){
+                System.out.println("[Serviço sem cliente]\nTipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
+                System.out.println("--------------------------------------------");
+            }
+        }
+        for (ServicoPreExecutado servico: sistema.getDados().getServicos_pre_executados()){
+            assert profissional != null;
+            if(servico.getNome_usuario_profissional().equals(profissional.getNomeUsuario())){
+                System.out.println("[Serviço com cliente]\nTipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
+                System.out.println("Nome de usuário do cliente: "+servico.getNome_usuario_cliente());
+                System.out.println("--------------------------------------------");
+            }
+        }
+    }
+
+    private static void removerUmServicoValido(ServicoValido valido, LogicaSistema sistema) {
+        sistema.getDados().getServicos_validos().remove(valido);
+    }
+
+    private static ServicoValido obter_servico_valido(int choice, LogicaSistema sistema) {
+        return sistema.getDados().getServicos_validos().get(choice-1);
+    }
+
+    private static int escolheServicoAtivo(LogicaSistema sistema) {
+        return exibeMenuServicosAtivos(sistema.getDados().getServicos_validos());
+    }
+
+    public static void fazerPedido(LogicaSistema sistema){
+        Cliente cliente = (Cliente) sistema.pegaUsuarioLogado();
+        int option = exibeMenuServicosComPrestador(sistema.getDados().getServicos_confirmados_com_prestador());
+        ServicoValidoComPrestador servico_com_prestador = tratarMenuServicosComPrestador(option);
+        removerUmServicoComPrestador(servico_com_prestador, sistema);
+        adicionarUmServicoComPrestadorECliente(servico_com_prestador, cliente.getNomeUsuario(), sistema);
+    }
+
+    private static void adicionarUmServicoComPrestadorECliente(ServicoValidoComPrestador servico_com_prestador, String nick_cliente, LogicaSistema sistema) {
+        //                                                      (String tipo_servico, String nome_usuario_profissional, double preco, String nome_usuario_cliente)
+        sistema.getDados().getServicos_pre_executados().add(new ServicoPreExecutado(servico_com_prestador.getTipoServico(), servico_com_prestador.getNome_usuario_profissional(), servico_com_prestador.getPreco(), nick_cliente));
+    }
+
+    private static void removerUmServicoComPrestador(ServicoValidoComPrestador servico_com_prestador, LogicaSistema sistema) {
+        sistema.getDados().getServicos_confirmados_com_prestador().remove(servico_com_prestador);
+    }
+
+    public static ServicoValidoComPrestador encontrarServicoComPrestador(int op, LogicaSistema sistema){
+        return sistema.getDados().getServicos_confirmados_com_prestador().get(op - 1);
     }
 }

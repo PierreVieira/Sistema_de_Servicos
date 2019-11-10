@@ -23,6 +23,21 @@ public class DadosDoSistema {
         inicializarDadosDoSistemaUsuarios();
         inicializarDadosDoSistemaServicosInativosEValidos();
         inicializarDadosDoSistemaServicosComPrestador();
+        inicializarDadosDoSistemaPreExecutados();
+    }
+
+    private void inicializarDadosDoSistemaPreExecutados() {
+        //Vai inicializar o array de serviços pre-executados
+        String tipo_servico, nick_profissional, nick_cliente;
+        double preco;
+        ArrayList<String[]> strings_servicos_pre_executados = arq.pegaDoArquivo("TextFiles/servicos_pre_executados.txt");
+        for(String[] s: strings_servicos_pre_executados){
+            tipo_servico = s[0];
+            nick_profissional = s[1];
+            preco = Double.parseDouble(s[2]);
+            nick_cliente = s[3];
+            this.getServicos_pre_executados().add(new ServicoPreExecutado(tipo_servico, nick_profissional, preco, nick_cliente));
+        }
     }
 
     private void inicializarDadosDoSistemaServicosComPrestador() {

@@ -1,3 +1,1 @@
-Recuperação de arquivos;Pierre;150.0;
-Formatação;Pierre;222.0;
-Instalação de programas;Pierre;780.0;
+Recuperação de arquivos;pierre;980.0;

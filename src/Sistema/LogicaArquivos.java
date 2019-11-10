@@ -1,5 +1,6 @@
 package Sistema;
 
+import Servicos.ServicoPreExecutado;
 import Servicos.ServicoValidoComPrestador;
 import Usuarios.Administrador;
 import Usuarios.Cliente;
@@ -112,8 +113,19 @@ class LogicaArquivos {
         }
     }
 
-    public String getCaminho() {
-        return caminho;
+    public void escreveNoArquivoPreExecutados(ArrayList<ServicoPreExecutado> servicos) {
+        try {
+            FileWriter escritor = new FileWriter(this.caminho);
+            BufferedWriter bw = new BufferedWriter(escritor);
+            bw.flush();
+            for(ServicoValidoComPrestador servico: servicos){
+                bw.write(servico.toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Erro na escrita do arquivo "+this.caminho);
+        }
     }
 
     void setCaminho(String caminho) {

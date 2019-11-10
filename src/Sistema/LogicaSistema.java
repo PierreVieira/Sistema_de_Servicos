@@ -1,4 +1,7 @@
 package Sistema;
+import Servicos.ServicoPreExecutado;
+import Servicos.ServicoValido;
+import Servicos.ServicoValidoComPrestador;
 import Usuarios.Administrador;
 import Usuarios.Cliente;
 import Usuarios.Profissional;
@@ -16,7 +19,7 @@ public class LogicaSistema {
     public LogicaSistema(DadosDoSistema dados){
         this.dados = dados;
     }
-
+    
     public void tratarCadastro(int opcao){
         switch (opcao){
             case 1: //Cadastrar Administrador
@@ -150,10 +153,6 @@ public class LogicaSistema {
         return false;
     }
 
-    public DadosDoSistema getDados() {
-        return dados;
-    }
-
     public Usuario pegaUsuarioLogado(){
         for(Cliente cliente: dados.getClientes()){
             if(cliente.isLogado()){
@@ -173,6 +172,11 @@ public class LogicaSistema {
         return null;//Não tem ninguem logado na plataforma (bugou)
     }
 
+
+    public DadosDoSistema getDados() {
+        return dados;
+    }
+
     public void systemLeave(){
         LogicaArquivos arq = new LogicaArquivos();
         arq.setCaminho("TextFiles/servicos_inativos.txt");
@@ -181,6 +185,8 @@ public class LogicaSistema {
         arq.escreveNoArquivoValidos(dados.getServicos_validos());
         arq.setCaminho("TextFiles/servicos_confirmados_com_prestador.txt");
         arq.escreveNoArquivoValidosComPrestador(dados.getServicos_confirmados_com_prestador());
+        arq.setCaminho("TextFiles/servicos_pre_executados.txt");
+        arq.escreveNoArquivoPreExecutados(dados.getServicos_pre_executados());
         arq.setCaminho("TextFiles/usuarios.txt");
         arq.escreveNoArquivoUsuarios(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
         System.exit(0);

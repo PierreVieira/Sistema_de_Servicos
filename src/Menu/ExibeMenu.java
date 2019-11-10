@@ -1,6 +1,8 @@
 package Menu;
 
 import Servicos.ServicoValido;
+import Servicos.ServicoValidoComPrestador;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -175,7 +177,7 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
-    static int exibeMenuServicosAtivos(ArrayList<ServicoValido> validos){
+    public static int exibeMenuServicosAtivos(ArrayList<ServicoValido> validos){
         Scanner teclado = new Scanner(System.in);
         int t_validos, opcao, cont = 1;
         t_validos = validos.size();
@@ -195,4 +197,27 @@ public abstract class ExibeMenu {
         }while(opcao > t_validos || opcao < 1);//Se a opção escolhida não for válida
         return opcao;
     }
+
+    public static int exibeMenuServicosComPrestador(ArrayList<ServicoValidoComPrestador> servico){
+        Scanner teclado = new Scanner(System.in);
+        int t_servico, opcao, cont = 1;
+        t_servico = servico.size();
+        System.out.println("====== SERVIÇOS DISPONÍVEIS ======");
+        for(ServicoValidoComPrestador valido: servico){
+            System.out.printf("[%d] %s\n", cont, valido.getTipoServico());
+            System.out.println("R$ "+valido.getPreco());
+            cont++;
+        }
+        System.out.println("==============================");
+        do{
+            System.out.print("Escolha uma opção: ");
+            opcao = teclado.nextInt();
+            System.out.println("---------------------------------");
+            if(opcao > t_servico || opcao < 1){
+                System.out.println("Opção inválida, por favor escolha uma opção válida");
+            }
+        }while(opcao > t_servico || opcao < 1);//Se a opção escolhida não for válida
+        return opcao;
+    }
+
 }

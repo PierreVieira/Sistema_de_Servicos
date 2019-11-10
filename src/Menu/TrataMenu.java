@@ -1,13 +1,8 @@
 package Menu;
 
-import Servicos.Servico;
 import Servicos.ServicoValido;
 import Servicos.ServicoValidoComPrestador;
 import Sistema.*;
-import Usuarios.Profissional;
-
-import java.util.Scanner;
-
 import static Menu.ExibeMenu.*;
 import static Sistema.LogicaServico.*;
 
@@ -36,6 +31,7 @@ public abstract class TrataMenu {
                 break;
             case 2:
                 //Cliente faz pedido de algum serviço que esteja ativo.
+                fazerPedidoCliente();
                 break;
             case 3:
                 //Cliente vê quais pedidos ele fez e que ainda não foram executados
@@ -43,6 +39,15 @@ public abstract class TrataMenu {
             case 4:
                 master_sistema.systemLeave(); //Sair
                 break;
+        }
+    }
+
+    private static void fazerPedidoCliente() {
+        if(master_sistema.getDados().getServicos_confirmados_com_prestador().size() > 0){
+            fazerPedido(master_sistema);
+        }
+        else{
+            System.out.println("Não existe nenhum serviço para você realizar um pedido");
         }
     }
 
@@ -55,59 +60,18 @@ public abstract class TrataMenu {
                 cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um novo serviço como inativo
                 break;
             case 2:
-                darPrecoNumServicoValido();//Cadastrar um novo pedido com prestador
+                darPrecoNumServicoValido(master_sistema);//Cadastrar um novo pedido com prestador
                 break;
             case 3:
                 //Executar pedidos que já tenha um cliente confirmado
                 break;
             case 4:
-                pesquisarPedidosComPrecosCadastradosENaoExecutados();//Pesquisar pedidos que cadastrou-se um preço
+                pesquisarPedidosComPrecosCadastradosENaoExecutados(master_sistema);//Pesquisar pedidos que cadastrou-se um preço
                 break;
             case 5:
                 master_sistema.systemLeave(); //Sair
                 break;
         }
-    }
-
-    private static void pesquisarPedidosComPrecosCadastradosENaoExecutados() {
-
-    }
-
-    private static void darPrecoNumServicoValido() {
-        Scanner teclado = new Scanner(System.in);
-        int choice;
-        double preco;
-        if(master_sistema.getDados().getServicos_validos().size() == 0){
-            System.out.println("Não há nenhum serviço aceito por um administrador para você dar o preço");
-        }
-        else{
-            choice = escolheServicoAtivo();
-            ServicoValido valido = obter_servico_valido(choice);
-            removerUmServicoValido(valido);
-            System.out.print("Informe um preço que irá cobrar para o serviço selecionado R$: ");
-            preco = teclado.nextDouble();
-            inseririUmServicoComPrestador(valido, preco);
-        }
-    }
-
-    private static void inseririUmServicoComPrestador(ServicoValido valido, double preco) {
-        Profissional profissional;
-        profissional = (Profissional) master_sistema.pegaUsuarioLogado();//Encontra o profissional que está logado no sistema
-        ServicoValidoComPrestador valido_com_prestador = new ServicoValidoComPrestador(valido.getTipoServico(), profissional.getNomeUsuario(), preco);
-        master_sistema.getDados().getServicos_confirmados_com_prestador().add(valido_com_prestador);//Insere um novo serviço com preço
-    }
-
-
-    private static void removerUmServicoValido(ServicoValido valido) {
-        master_sistema.getDados().getServicos_validos().remove(valido);
-    }
-
-    private static ServicoValido obter_servico_valido(int choice) {
-        return master_sistema.getDados().getServicos_validos().get(choice-1);
-    }
-
-    private static int escolheServicoAtivo() {
-        return exibeMenuServicosAtivos(master_sistema.getDados().getServicos_validos());
     }
 
     public static void tratarMenuAdministrador(int opcao){
@@ -185,5 +149,9 @@ public abstract class TrataMenu {
                 break;
         }
         return novo_nome;
+    }
+
+    public static ServicoValidoComPrestador tratarMenuServicosComPrestador(int op){
+        return encontrarServicoComPrestador(op, master_sistema);
     }
 }
