@@ -128,4 +128,48 @@ public abstract class ExibeMenu {
         }while(opcao > 9 || opcao < 1);//Se a opção escolhida não for válida
         return opcao;
     }
+
+    public static int exibeMenuValidacao(){
+        int opcao;
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("========= MENÚ VALIDAÇÃO =========");
+        System.out.println("[1] Validar um serviço inativo");
+        System.out.println("[2] Renomear um serviço inativo");
+        System.out.println("[3] Remover um serviço inativo");
+        System.out.println("[4] Sair");
+        System.out.println("=================================");
+        do {
+            System.out.print("Escolha uma opção: ");
+            opcao = teclado.nextInt();
+            System.out.println("---------------------------------");
+            if(opcao > 4 || opcao < 1){
+                System.out.println("Opção inválida, por favor escolha uma opção válida");
+            }
+        }while(opcao > 4 || opcao < 1);//Se a opção escolhida não for válida
+        return opcao;
+    }
+
+    public static int exibeMenuNovoNome(){
+        int opcao;
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("========= NOVO NOME =========");
+        System.out.println("[1] Manutenção preventiva");
+        System.out.println("[2] Formatação");
+        System.out.println("[3] Backup");
+        System.out.println("[4] Recuperação de arquivos");
+        System.out.println("[5] Instalação de programas");
+        System.out.println("[6] Troca de peças de desktops");
+        System.out.println("[7] Troca de peças de notebooks");
+        System.out.println("[8] Troca de peças de celulares");
+        System.out.println("=================================");
+        do {
+            System.out.print("Escolha uma opção: ");
+            opcao = teclado.nextInt();
+            System.out.println("---------------------------------");
+            if(opcao > 8 || opcao < 1){
+                System.out.println("Opção inválida, por favor escolha uma opção válida");
+            }
+        }while(opcao > 8 || opcao < 1);//Se a opção escolhida não for válida
+        return opcao;
+    }
 }

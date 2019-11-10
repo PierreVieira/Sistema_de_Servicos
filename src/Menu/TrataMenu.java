@@ -2,7 +2,7 @@ package Menu;
 
 import Sistema.*;
 import static Menu.ExibeMenu.*;
-import static Sistema.LogicaServico.cadastraServicoInativo;
+import static Sistema.LogicaServico.*;
 
 public abstract class TrataMenu {
     private static LogicaSistema master_sistema;
@@ -22,10 +22,9 @@ public abstract class TrataMenu {
     }
 
     public static void tatarMenuCliente(int opcao) {
-        int choice;
         switch(opcao){
             case 1:
-                choice = exibeMenuServicos();
+                int choice = exibeMenuServicos();
                 cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um novo serviço como inativo
                 break;
             case 2:
@@ -42,14 +41,13 @@ public abstract class TrataMenu {
 
 
     public static void tratarMenuProfissional(int opcao){
-        int choice;
         switch(opcao){
             case 1:
-                choice = exibeMenuServicos();
-                cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um serviço como inativo
+                int choice = exibeMenuServicos();
+                cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um novo serviço como inativo
                 break;
             case 2:
-                //Selecionar um serviço informando o preço que cobra
+                //Selecionar um serviço sem informando o preço que cobra
                 break;
             case 3:
                 //Executar pedidos que já tenha um cliente confirmado
@@ -64,17 +62,18 @@ public abstract class TrataMenu {
     }
 
     public static void tratarMenuAdministrador(int opcao){
-        int choice;
         switch (opcao){
             case 1:
                 master_sistema.tratarCadastro(1); //Cadastrar um novo administrador
                 break;
             case 2:
-                choice = exibeMenuServicos();
+                int choice = exibeMenuServicos();
                 cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um serviço como inativo
                 break;
             case 3:
-                //Validar um serviço que já foi cadastrado
+                listarServicosInativos(master_sistema.getDados());
+                int op = exibeMenuValidacao();
+                tratarMenuValidacao(op);
                 break;
             case 4:
                 //Listar pedidos
@@ -83,5 +82,59 @@ public abstract class TrataMenu {
                 master_sistema.systemLeave(); //Sair
                 break;
         }
+    }
+
+    private static void tratarMenuValidacao(int op) {
+        listarServicosInativos(master_sistema.getDados());
+        switch (op){
+            case 1:
+                validarUmServicoInativo(master_sistema.getDados());
+                break;
+            case 2:
+                renomearUmServicoInativo(master_sistema.getDados());
+                break;
+            case 3:
+                removerUmServicoInativo(master_sistema.getDados());
+                break;
+        }
+    }
+
+    public static String tratarMenuNovoNome(int op){
+        System.out.println("[1] Manutenção preventiva");
+        System.out.println("[2] Formatação");
+        System.out.println("[3] Backup");
+        System.out.println("[4] Recuperação de arquivos");
+        System.out.println("[5] Instalação de programas");
+        System.out.println("[6] Troca de peças de desktops");
+        System.out.println("[7] Troca de peças de notebooks");
+        System.out.println("[8] Troca de peças de celulares");
+        String novo_nome = "";
+        switch(op){
+            case 1:
+                novo_nome = "Manutenção preventiva";
+                break;
+            case 2:
+                novo_nome = "Formatação";
+                break;
+            case 3:
+                novo_nome = "Backup";
+                break;
+            case 4:
+                novo_nome = "Recuperação de arquivos";
+                break;
+            case 5:
+                novo_nome = "Instalação de programas";
+                break;
+            case 6:
+                novo_nome = "Troca de peças de desktops";
+                break;
+            case 7:
+                novo_nome = "Troca de peças de notebooks";
+                break;
+            case 8:
+                novo_nome = "Troca de peças de celulares";
+                break;
+        }
+        return novo_nome;
     }
 }

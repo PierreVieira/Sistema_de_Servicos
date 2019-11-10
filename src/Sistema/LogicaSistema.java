@@ -2,6 +2,9 @@ package Sistema;
 import Concretos.Administrador;
 import Concretos.Cliente;
 import Concretos.Profissional;
+import Concretos.Usuario;
+import Servicos.ServicoInativo;
+
 import java.util.Scanner;
 
 import static Menu.ExibeMenu.*;
@@ -93,7 +96,9 @@ public class LogicaSistema {
             System.out.println("Não foi encontrado nenhum perfil com o nome e senha informados");
         }
         else{
-            tratarLoginContinuacao(nome, senha);
+            while(true){
+                tratarLoginContinuacao(nome, senha);
+            }
         }
     }
 
@@ -146,14 +151,37 @@ public class LogicaSistema {
         return false;
     }
 
-    public void systemLeave(){
-        LogicaArquivos arq = new LogicaArquivos();
-        arq.setCaminho("TextFiles/usuarios.txt");
-        arq.escreveNoArquivo(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
-        System.exit(0);
-    }
-
     public DadosDoSistema getDados() {
         return dados;
+    }
+
+    public Usuario pegaUsuarioLogado(){
+        for(Cliente cliente: dados.getClientes()){
+            if(cliente.isLogado()){
+                return cliente;//Retorna o cliente logado
+            }
+        }
+        for(Profissional profissional: dados.getProfissionais()){
+            if(profissional.isLogado()){
+                return profissional;//Retorna o profissional logado
+            }
+        }
+        for(Administrador administrador: dados.getAdministradores()){
+            if(administrador.isLogado()){
+                return administrador;//Retorna o administrador logado
+            }
+        }
+        return null;//Não tem ninguem logado na plataforma (bugou)
+    }
+
+    public void systemLeave(){
+        LogicaArquivos arq = new LogicaArquivos();
+        arq.setCaminho("TextFiles/servicos_inativos.txt");
+        arq.escreveNoArquivoServicosInativos(dados.getServicos_inativos());
+        arq.setCaminho("TextFiles/servicos_validos.txt");
+        arq.escreveNoArquivoValidos(dados.getServicos_validos());
+        arq.setCaminho("TextFiles/usuarios.txt");
+        arq.escreveNoArquivoUsuarios(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
+        System.exit(0);
     }
 }

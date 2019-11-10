@@ -3,6 +3,8 @@ package Sistema;
 import Concretos.Administrador;
 import Concretos.Cliente;
 import Concretos.Profissional;
+import Servicos.ServicoValido;
+import Servicos.ServicoInativo;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ class LogicaArquivos {
         return string_dados;
     }
 
-    void escreveNoArquivo(ArrayList<Administrador> administradores, ArrayList<Profissional> profissionais, ArrayList<Cliente> clientes){
+    void escreveNoArquivoUsuarios(ArrayList<Administrador> administradores, ArrayList<Profissional> profissionais, ArrayList<Cliente> clientes){
         String mensagem = null;
         try {
             FileWriter escritor = new FileWriter(this.caminho);
@@ -60,6 +62,36 @@ class LogicaArquivos {
             mensagem = "Erro de escrita no arquivo" + this.caminho;
         }finally {
             System.out.println(mensagem);
+        }
+    }
+
+    void escreveNoArquivoServicosInativos(ArrayList<ServicoInativo> servicos){
+        try {
+            FileWriter escritor = new FileWriter(this.caminho);
+            BufferedWriter bw = new BufferedWriter(escritor);
+            bw.flush();
+            for(ServicoInativo servico_inativo: servicos){
+                bw.write(servico_inativo.toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Erro na escrita do arquivo "+this.caminho);
+        }
+    }
+
+    void escreveNoArquivoValidos(ArrayList<ServicoValido> servicos){
+        try {
+            FileWriter escritor = new FileWriter(this.caminho);
+            BufferedWriter bw = new BufferedWriter(escritor);
+            bw.flush();
+            for(ServicoValido servico: servicos){
+                bw.write(servico.toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Erro na escrita do arquivo "+this.caminho);
         }
     }
 
