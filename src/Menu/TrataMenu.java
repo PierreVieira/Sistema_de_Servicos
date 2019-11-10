@@ -30,11 +30,11 @@ public abstract class TrataMenu {
                 cadastraServicoInativo(choice, master_sistema.getDados());//Cadastrar um novo serviço como inativo
                 break;
             case 2:
-                //Cliente faz pedido de algum serviço que esteja ativo.
-                fazerPedidoCliente();
+                fazerPedidoCliente(); //Cliente faz pedido de algum serviço que esteja ativo.
                 break;
             case 3:
-                //Cliente vê quais pedidos ele fez e que ainda não foram executados
+                //Cliente vê quais pedidos ele fez e que ainda não foram executados, por pedidos que ele já fez e já foram executados
+                consultarPedidosCliente(master_sistema);
                 break;
             case 4:
                 master_sistema.systemLeave(); //Sair

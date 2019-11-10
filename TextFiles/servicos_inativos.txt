@@ -1,6 +1,3 @@
 Formatação;
-Instalação de programas;
 Troca de peças de nootebook;
-Troca de peças de celulares;
 Backup;
-Troca de peças de desktop;

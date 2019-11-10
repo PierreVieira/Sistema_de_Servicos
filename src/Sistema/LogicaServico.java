@@ -1,9 +1,6 @@
 package Sistema;
 
-import Servicos.ServicoPreExecutado;
-import Servicos.ServicoValido;
-import Servicos.ServicoInativo;
-import Servicos.ServicoValidoComPrestador;
+import Servicos.*;
 import Usuarios.Cliente;
 import Usuarios.Profissional;
 
@@ -129,18 +126,42 @@ public abstract class LogicaServico {
 
     public static void pesquisarPedidosComPrecosCadastradosENaoExecutados(LogicaSistema sistema) {
         Profissional profissional = (Profissional) sistema.pegaUsuarioLogado();
+        assert profissional != null;
+        //Pesquisa por serviços que não tem cliente
         for (ServicoValidoComPrestador servico: sistema.getDados().getServicos_confirmados_com_prestador()){
-            assert profissional != null;
             if(servico.getNome_usuario_profissional().equals(profissional.getNomeUsuario())){
                 System.out.println("[Serviço sem cliente]\nTipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
                 System.out.println("--------------------------------------------");
             }
         }
+        //Pesquisa por seviços que já tem um cliente
         for (ServicoPreExecutado servico: sistema.getDados().getServicos_pre_executados()){
-            assert profissional != null;
             if(servico.getNome_usuario_profissional().equals(profissional.getNomeUsuario())){
                 System.out.println("[Serviço com cliente]\nTipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
                 System.out.println("Nome de usuário do cliente: "+servico.getNome_usuario_cliente());
+                System.out.println("--------------------------------------------");
+            }
+        }
+    }
+
+    public static void consultarPedidosCliente(LogicaSistema sistema){
+        Cliente cliente = (Cliente) sistema.pegaUsuarioLogado();
+        assert cliente != null;
+        //Pesquisar por serviços que ainda não foram finalizdos
+        for (ServicoPreExecutado servico: sistema.getDados().getServicos_pre_executados()){
+            if(servico.getNome_usuario_cliente().equals(cliente.getNomeUsuario())){
+                System.out.println("[Não finalizado]");
+                System.out.println("Tipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
+                System.out.println("Nome de usuário do profissional: "+servico.getNome_usuario_profissional());
+                System.out.println("--------------------------------------------");
+            }
+        }
+        //Pesquisa por pedidos que fez e já foram finalizados
+        for (ServicoExecutado servico: sistema.getDados().getServicos_executados()){
+            if(servico.getNome_usuario_cliente().equals(cliente.getNomeUsuario())){
+                System.out.println("[Finalizado]");
+                System.out.println("Tipo de serviço: "+servico.getTipoServico()+"\nPreço cobrado R$: "+servico.getPreco());
+                System.out.println("Nome de usuário do profissional: "+servico.getNome_usuario_profissional());
                 System.out.println("--------------------------------------------");
             }
         }
