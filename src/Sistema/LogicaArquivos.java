@@ -1,12 +1,9 @@
 package Sistema;
 
-import Servicos.ServicoPreExecutado;
-import Servicos.ServicoValidoComPrestador;
+import Servicos.*;
 import Usuarios.Administrador;
 import Usuarios.Cliente;
 import Usuarios.Profissional;
-import Servicos.ServicoValido;
-import Servicos.ServicoInativo;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -113,12 +110,27 @@ class LogicaArquivos {
         }
     }
 
-    public void escreveNoArquivoPreExecutados(ArrayList<ServicoPreExecutado> servicos) {
+    void escreveNoArquivoPreExecutados(ArrayList<ServicoPreExecutado> servicos) {
         try {
             FileWriter escritor = new FileWriter(this.caminho);
             BufferedWriter bw = new BufferedWriter(escritor);
             bw.flush();
-            for(ServicoValidoComPrestador servico: servicos){
+            for(ServicoPreExecutado servico: servicos){
+                bw.write(servico.toString());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Erro na escrita do arquivo "+this.caminho);
+        }
+    }
+
+    void escreveNoArquivoExecutados(ArrayList<ServicoExecutado> servicos_executados) {
+        try {
+            FileWriter escritor = new FileWriter(this.caminho);
+            BufferedWriter bw = new BufferedWriter(escritor);
+            bw.flush();
+            for(ServicoExecutado servico: servicos_executados){
                 bw.write(servico.toString());
                 bw.newLine();
             }

@@ -1,7 +1,9 @@
 package Menu;
 
+import Servicos.ServicoPreExecutado;
 import Servicos.ServicoValido;
 import Servicos.ServicoValidoComPrestador;
+import Sistema.DadosDoSistema;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -220,4 +222,10 @@ public abstract class ExibeMenu {
         return opcao;
     }
 
+    public static int exibeMenuPreExecutados(ArrayList<ServicoPreExecutado> pre_executados, String nick_profissional){
+        /*O que deve-se fazer: percorrer o arraylist dos pre_executados jogando em um novo arraylist só de executados os
+        * que o profissional tem nome
+        */
+       return 0;
+    }
 }

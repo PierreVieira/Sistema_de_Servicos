@@ -1,4 +1,5 @@
 package Sistema;
+import Servicos.ServicoExecutado;
 import Servicos.ServicoPreExecutado;
 import Servicos.ServicoValido;
 import Servicos.ServicoValidoComPrestador;
@@ -104,6 +105,10 @@ public class LogicaSistema {
         }
     }
 
+    public static ServicoExecutado identificaServicoASerExecutado(LogicaSistema sistema){
+        int opcao = exibeMenuPreExecutados(sistema.getDados().getServicos_pre_executados(), sistema.pegaUsuarioLogado().getNomeUsuario());
+
+    }
     private void tratarLoginContinuacao(String nome, String senha) {
         int opcao;
         dados.deslogarDiferentes(nome, senha);
@@ -187,6 +192,8 @@ public class LogicaSistema {
         arq.escreveNoArquivoValidosComPrestador(dados.getServicos_confirmados_com_prestador());
         arq.setCaminho("TextFiles/servicos_pre_executados.txt");
         arq.escreveNoArquivoPreExecutados(dados.getServicos_pre_executados());
+        arq.setCaminho("TextFiles/servicos_executados.txt");
+        arq.escreveNoArquivoExecutados(dados.getServicos_executados());
         arq.setCaminho("TextFiles/usuarios.txt");
         arq.escreveNoArquivoUsuarios(dados.getAdministradores(), dados.getProfissionais(), dados.getClientes());
         System.exit(0);

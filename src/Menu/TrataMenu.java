@@ -1,10 +1,12 @@
 package Menu;
 
+import Servicos.ServicoPreExecutado;
 import Servicos.ServicoValido;
 import Servicos.ServicoValidoComPrestador;
 import Sistema.*;
 import static Menu.ExibeMenu.*;
 import static Sistema.LogicaServico.*;
+import static Sistema.LogicaSistema.identificaServicoASerExecutado;
 
 public abstract class TrataMenu {
     private static LogicaSistema master_sistema;
@@ -33,8 +35,7 @@ public abstract class TrataMenu {
                 fazerPedidoCliente(); //Cliente faz pedido de algum serviço que esteja ativo.
                 break;
             case 3:
-                //Cliente vê quais pedidos ele fez e que ainda não foram executados, por pedidos que ele já fez e já foram executados
-                consultarPedidosCliente(master_sistema);
+                consultarPedidosCliente(master_sistema); //Cliente vê quais pedidos ele fez e que ainda não foram executados, por pedidos que ele já fez e já foram executados
                 break;
             case 4:
                 master_sistema.systemLeave(); //Sair
@@ -64,6 +65,8 @@ public abstract class TrataMenu {
                 break;
             case 3:
                 //Executar pedidos que já tenha um cliente confirmado
+                ServicoPreExecutado servico_pre_executado = identificaServicoASerExecutado(master_sistema);
+                executarServico(master_sistema, servico_pre_executado);
                 break;
             case 4:
                 pesquisarPedidosComPrecosCadastradosENaoExecutados(master_sistema);//Pesquisar pedidos que cadastrou-se um preço

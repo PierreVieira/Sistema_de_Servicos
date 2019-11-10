@@ -199,4 +199,13 @@ public abstract class LogicaServico {
     public static ServicoValidoComPrestador encontrarServicoComPrestador(int op, LogicaSistema sistema){
         return sistema.getDados().getServicos_confirmados_com_prestador().get(op - 1);
     }
+
+    public static void executarServico(LogicaSistema sistema, ServicoPreExecutado servico_pre_executado){
+        for(ServicoPreExecutado servicoPreExecutado: sistema.getDados().getServicos_pre_executados()){
+            if(servico_pre_executado.toString().equals(servicoPreExecutado.toString())){
+                sistema.getDados().getServicos_pre_executados().remove(servicoPreExecutado);
+                sistema.getDados().getServicos_executados().add((ServicoExecutado) servico_pre_executado);
+            }
+        }
+    }
 }
