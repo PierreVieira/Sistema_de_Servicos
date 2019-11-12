@@ -3,3 +3,4 @@ Troca de peças de desktop;
 Formatação;
 Instalação de programas;
 Backup;
+Recuperação de arquivos;

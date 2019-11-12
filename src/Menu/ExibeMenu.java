@@ -33,14 +33,14 @@ public abstract class ExibeMenu {
         int opcao;
         Scanner teclado = new Scanner(System.in);
         System.out.println("========= MENÚ CADASTRO =========");
-        System.out.println("[2] Cadastrar profissional");
-        System.out.println("[3] Cadastrar cliente");
-        System.out.println("[4] Voltar");
-        System.out.println("[5] Sair");
+        System.out.println("[1] Cadastrar profissional");
+        System.out.println("[2] Cadastrar cliente");
+        System.out.println("[3] Voltar");
+        System.out.println("[4] Sair");
         System.out.println("=================================");
         do {
             System.out.print("Escolha uma opção: ");
-            opcao = teclado.nextInt();
+            opcao = teclado.nextInt() + 1;
             System.out.println("---------------------------------");
             if(opcao > 5 || opcao < 2){
                 System.out.println("Opção inválida, por favor escolha uma opção válida");
@@ -128,10 +128,10 @@ public abstract class ExibeMenu {
             System.out.print("Escolha uma opção: ");
             opcao = teclado.nextInt();
             System.out.println("---------------------------------");
-            if(opcao > 9 || opcao < 1){
+            if(opcao > 8 || opcao < 1){
                 System.out.println("Opção inválida, por favor escolha uma opção válida");
             }
-        }while(opcao > 9 || opcao < 1);//Se a opção escolhida não for válida
+        }while(opcao > 8 || opcao < 1);//Se a opção escolhida não for válida
         return opcao;
     }
 
